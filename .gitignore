@@ -1,15 +1,35 @@
 *.iml
 .gradle
 /local.properties
+local.properties
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+
+# IDE
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
+/.idea/compiler.xml
+/.idea/gradle.xml
+/.idea/misc.xml
+/.idea/vcs.xml
+/.idea/deploymentTargetSelector.xml
+/.idea/migrations.xml
+/.idea/AndroidProjectSystem.xml
+/.idea/copilot.data.migration.ask2agent.xml
+/.idea/markdown.xml
+/.idea/runConfigurations.xml
+
+# Build outputs
+**/build/
+app/release/
+
+# Signing
+*.jks
+*.keystore

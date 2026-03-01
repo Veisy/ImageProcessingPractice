@@ -1,1 +1,0 @@
-/home/veisy/StudioProjects/ImageProcessingPractice/openCV460/build/intermediates/cxx/Debug/h692g61m/obj/arm64-v8a

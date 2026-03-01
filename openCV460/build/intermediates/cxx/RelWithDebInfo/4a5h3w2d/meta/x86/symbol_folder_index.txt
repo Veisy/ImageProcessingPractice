@@ -1,1 +1,0 @@
-/home/veisy/StudioProjects/ImageProcessingPractice/openCV460/build/intermediates/cxx/RelWithDebInfo/4a5h3w2d/obj/x86

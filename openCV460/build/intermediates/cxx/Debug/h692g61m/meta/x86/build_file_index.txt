@@ -1,1 +1,0 @@
-/home/veisy/StudioProjects/ImageProcessingPractice/openCV460/libcxx_helper/CMakeLists.txt
