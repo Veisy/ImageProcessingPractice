@@ -6,6 +6,7 @@ import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
@@ -18,6 +19,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -60,6 +62,15 @@ import com.vyy.imageprocessingpractice.utils.Constants.SPECIAL_OPERATION_1
 import com.vyy.imageprocessingpractice.utils.Constants.SPECIAL_OPERATION_2
 import com.vyy.imageprocessingpractice.utils.Constants.SPECIAL_THRESHOLD
 import com.vyy.imageprocessingpractice.utils.Constants.WIENER_FILTER
+import com.vyy.imageprocessingpractice.utils.Constants.HW3_1_1_FILTER
+import com.vyy.imageprocessingpractice.utils.Constants.HW3_1_2_FILTER
+import com.vyy.imageprocessingpractice.utils.Constants.HW3_1_3_MEDIAN
+import com.vyy.imageprocessingpractice.utils.Constants.HW3_1_3_ADAPTIVE
+import com.vyy.imageprocessingpractice.utils.Constants.HW3_1_4_FILTER
+import com.vyy.imageprocessingpractice.utils.Constants.HW3_2_1_RESTORE
+import com.vyy.imageprocessingpractice.utils.Constants.HW3_2_2_RESTORE
+import com.vyy.imageprocessingpractice.utils.Constants.HW3_2_3_RESTORE
+import com.vyy.imageprocessingpractice.utils.Constants.HW3_3_FINGERPRINT
 import com.vyy.imageprocessingpractice.utils.InputFilterMinMax
 import com.vyy.imageprocessingpractice.utils.checkEnoughTimePassed
 import kotlinx.coroutines.*
@@ -89,6 +100,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -178,10 +190,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             buttonLungSegmentation.setOnClickListener(this@MainActivity)
             buttonSpecialOperation2.setOnClickListener(this@MainActivity)
             buttonHighPassFilter.setOnClickListener(this@MainActivity)
-            buttonWienerFilter.setOnClickListener(this@MainActivity)
             buttonAverageThreshold.setOnClickListener(this@MainActivity)
             buttonOtsuThreshold.setOnClickListener(this@MainActivity)
             buttonSpecialThreshold.setOnClickListener(this@MainActivity)
+            buttonHw311.setOnClickListener(this@MainActivity)
+            buttonHw312.setOnClickListener(this@MainActivity)
+            buttonHw313Median.setOnClickListener(this@MainActivity)
+            buttonHw313Adaptive.setOnClickListener(this@MainActivity)
+            buttonHw314.setOnClickListener(this@MainActivity)
+            buttonHw321.setOnClickListener(this@MainActivity)
+            buttonHw322.setOnClickListener(this@MainActivity)
+            buttonHw323.setOnClickListener(this@MainActivity)
+            buttonHw33.setOnClickListener(this@MainActivity)
         }
     }
 
@@ -257,7 +277,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.button_rgbToHsi, R.id.button_rgbToHsv, R.id.textView_rgb, R.id.button_averageThreshold, R.id.button_otsuThreshold, R.id.button_specialThreshold,
                 R.id.button_minFilter, R.id.button_maxFilter, R.id.button_medianFilter, R.id.button_averageFilter,
                 R.id.button_laplacianFilter, R.id.button_sobelGradient, R.id.button_gammaTransformation,
-                R.id.button_highPassFilter, R.id.button_wienerFilter -> {
+                R.id.button_highPassFilter -> {
                     cancelCurrentJobs(isImageUriToBitmapCanceled = false)
                     updateSelectedProcess(v.id)
                     imageProcessingJob = this.lifecycleScope.launch(Dispatchers.Main) {
@@ -277,7 +297,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                 R.id.button_sobelGradient -> SOBEL_GRADIENT
                                 R.id.button_gammaTransformation -> GAMMA_TRANSFORMATION
                                 R.id.button_highPassFilter -> HIGH_PASS_FILTER
-                                R.id.button_wienerFilter -> WIENER_FILTER
                                 else -> RGB_TO_GRAY
                             }
                         )
@@ -295,6 +314,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                 else -> LUNG_SEGMENTATION
                             }
                         )
+                    }
+                }
+
+                R.id.button_hw3_1_1, R.id.button_hw3_1_2, R.id.button_hw3_1_3_median,
+                R.id.button_hw3_1_3_adaptive, R.id.button_hw3_1_4,
+                R.id.button_hw3_2_1, R.id.button_hw3_2_2, R.id.button_hw3_2_3,
+                R.id.button_hw3_3 -> {
+                    cancelCurrentJobs()
+                    hideGrayAndRgbTextView()
+                    updateSelectedProcess(v.id)
+                    val (drawableResId, filterType) = when (v.id) {
+                        R.id.button_hw3_1_1 -> R.drawable.hw3_1_1 to HW3_1_1_FILTER
+                        R.id.button_hw3_1_2 -> R.drawable.hw3_1_2 to HW3_1_2_FILTER
+                        R.id.button_hw3_1_3_median -> R.drawable.hw3_1_3 to HW3_1_3_MEDIAN
+                        R.id.button_hw3_1_3_adaptive -> R.drawable.hw3_1_3 to HW3_1_3_ADAPTIVE
+                        R.id.button_hw3_1_4 -> R.drawable.hw3_1_4 to HW3_1_4_FILTER
+                        R.id.button_hw3_2_1 -> R.drawable.hw3_2_1 to HW3_2_1_RESTORE
+                        R.id.button_hw3_2_2 -> R.drawable.hw3_2_2 to HW3_2_2_RESTORE
+                        R.id.button_hw3_2_3 -> R.drawable.hw3_2_3 to HW3_2_3_RESTORE
+                        else -> R.drawable.hw3_3 to HW3_3_FINGERPRINT
+                    }
+                    imageProcessingJob = this.lifecycleScope.launch(Dispatchers.Main) {
+                        processHw3Image(drawableResId, filterType)
                     }
                 }
 
@@ -643,6 +685,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         SPECIAL_THRESHOLD -> applySpecialThreshold(
                             bitmap = imageBitmap!!, resources = resources
                         )
+                        HIGH_PASS_FILTER -> applyHighPassFilter(
+                            bitmap = imageBitmap!!, resources = resources
+                        )
                         else -> {
                             val grayBitmap = rgbToGray(
                                 bitmap = imageBitmap!!, resources = resources
@@ -732,6 +777,82 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Special bitmap operation failed: ${e.message}", e)
+        } finally {
+            showProgressBar(false)
+        }
+    }
+
+    private suspend fun processHw3Image(drawableResId: Int, filterType: String) {
+        try {
+            showProgressBar(true)
+
+            val sourceBitmap = withContext(Dispatchers.Default) {
+                BitmapFactory.decodeResource(resources, drawableResId)
+                    .copy(Bitmap.Config.ARGB_8888, true)
+            }
+
+            // Display source image and push to stack
+            updateImageView(sourceBitmap.toDrawable(resources))
+            addToImageStack(sourceBitmap)
+            imageUriToBitmapDeferred = CoroutineScope(Dispatchers.Default).async { sourceBitmap }
+
+            // Set grayscale UI state
+            binding.apply {
+                textViewGrayScale.visibility = View.VISIBLE
+                textViewRgb.visibility = View.GONE
+            }
+
+            when (filterType) {
+                // Single-result filters (HW3_1)
+                HW3_1_1_FILTER, HW3_1_2_FILTER, HW3_1_3_MEDIAN,
+                HW3_1_3_ADAPTIVE, HW3_1_4_FILTER -> {
+                    val resultDrawable = withContext(Dispatchers.Default) {
+                        when (filterType) {
+                            HW3_1_1_FILTER -> hw3_1_1(sourceBitmap, resources)
+                            HW3_1_2_FILTER -> hw3_1_2(sourceBitmap, resources)
+                            HW3_1_3_MEDIAN -> hw3_1_3Median(sourceBitmap, resources)
+                            HW3_1_3_ADAPTIVE -> hw3_1_3Adaptive(sourceBitmap, resources)
+                            else -> hw3_1_4(sourceBitmap, resources)
+                        }
+                    }
+                    updateImageView(resultDrawable)
+                    imageUriToBitmapDeferred = CoroutineScope(Dispatchers.Default).async {
+                        val bitmap = resultDrawable.bitmap
+                        addToImageStack(bitmap)
+                        bitmap
+                    }
+                }
+                // Multi-result slideshows (HW3_2 and HW3_3)
+                else -> {
+                    val listOfBitmapDrawables = withContext(Dispatchers.Default) {
+                        when (filterType) {
+                            HW3_2_1_RESTORE -> hw3_2_1(sourceBitmap, resources)
+                            HW3_2_2_RESTORE -> hw3_2_2(sourceBitmap, resources)
+                            HW3_2_3_RESTORE -> hw3_2_3(sourceBitmap, resources)
+                            else -> hw3_3Process(sourceBitmap, resources)
+                        }
+                    }
+
+                    imageUriToBitmapDeferred = CoroutineScope(Dispatchers.Default).async {
+                        listOfBitmapDrawables.last().bitmap
+                    }
+
+                    listOfBitmapDrawables.forEachIndexed { index, bitmapDrawable ->
+                        updateImageView(bitmapDrawable)
+                        addToImageStack(bitmapDrawable.bitmap)
+                        Toast.makeText(
+                            this,
+                            "Image ${index + 1} of ${listOfBitmapDrawables.size}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        if (index < listOfBitmapDrawables.size - 1) {
+                            delay(2000)
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "HW3 image processing failed: ${e.message}", e)
         } finally {
             showProgressBar(false)
         }
@@ -869,7 +990,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 buttonLaplacianFilter,
                 buttonSobelGradient,
                 buttonSpecialOperation,
-                buttonGammaTransformation
+                buttonGammaTransformation,
+                buttonLungSegmentation,
+                buttonSpecialOperation2,
+                buttonHighPassFilter,
+                buttonWienerFilter,
+                buttonAverageThreshold,
+                buttonOtsuThreshold,
+                buttonSpecialThreshold,
+                buttonHw311,
+                buttonHw312,
+                buttonHw313Median,
+                buttonHw313Adaptive,
+                buttonHw314,
+                buttonHw321,
+                buttonHw322,
+                buttonHw323,
+                buttonHw33
             )
             clickableViews.forEach { it.isEnabled = !isShown }
         }

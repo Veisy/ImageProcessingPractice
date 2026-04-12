@@ -9,7 +9,6 @@
         <item name="colorSecondary">@color/gray_level_7</item>
         <item name="colorSecondaryVariant">@color/gray_level_5</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <!-- Status bar color is managed by enableEdgeToEdge() -->
     </style>
 </resources>

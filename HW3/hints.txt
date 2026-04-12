@@ -1,0 +1,15 @@
+- HW3_1_1 has paper(black) noise. Use a 3x3 contra-harmonic filter of order 1.5.
+- HW3_1_2 has salt(white) noise. Use with a mean filter Q = -1.5.
+- HW3_1_3 has A LOT OF salt and paper noise (almost unseeable). First use a median filter of size 7x7 and obtain and image. Then use an adaptive median filter with Smax = 7. Both will be seperately operate on the HW3_1_3.
+- HW3_1_4 has A LOT OF salt and paper noise (but less than HW3_1_3). Use a median filter of size 3x3, and apply this filter 3 times.
+
+- All HW3_1 images are from the same original image.
+
+- HW3_2_1 has A LOT OF salt and paper and motion noise (motion is from top left to bottom right, -45 degree).
+- HW3_2_2 has A LOT OF salt and paper and motion noise (similar to HW3_2_1, but little less severe).
+- HW3_2_3 has only motion noise (motion is from top left to bottom right, -45 degree).
+
+- All HW3_2 images are from the same original image. All have same motion noise (motion is from top left to bottom right, -45 degree).
+
+- HW3_3 is a black and white fingerprint. It has BHPF (order 4 with cutoff frequency 50). First apply highpass filtering and obtain and image. Then apply thresholding and obtain an image. Both will be seperately operate on the HW3_3.
+	Reference images (images to obtain ourself) for HW3_3 are HW3_3_1_reference and HW3_3_2_reference. We try use inverse filtering and Wiener filtering. For motion, from mathematical modeling we assume a=b=0.1 and T=1.

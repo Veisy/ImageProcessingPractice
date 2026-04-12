@@ -368,7 +368,7 @@
         app:layout_constraintBottom_toTopOf="@id/button_process"
         app:layout_constraintEnd_toEndOf="@id/guideline4"
         app:layout_constraintStart_toStartOf="@id/guideline4"
-        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal3"
+        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal4"
         tools:visibility="visible" />
 
     <View
@@ -404,6 +404,133 @@
         app:layout_constraintEnd_toEndOf="@id/frame"
         app:layout_constraintStart_toStartOf="@id/frame"
         app:layout_constraintTop_toBottomOf="@id/horizontalScrollView_filters" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView_hw3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="@id/frame"
+        app:layout_constraintStart_toStartOf="@id/frame"
+        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal3">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button_hw3_1_1"
+                style="@style/normalButtonStyle"
+                android:text="@string/hw3_1_1"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="@dimen/textSize_small"
+                app:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_hw3_1_2"
+                style="@style/normalButtonStyle"
+                android:text="@string/hw3_1_2"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="@dimen/textSize_small"
+                app:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_hw3_1_1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_hw3_1_3_median"
+                style="@style/normalButtonStyle"
+                android:text="@string/hw3_1_3_med"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="@dimen/textSize_small"
+                app:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_hw3_1_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_hw3_1_3_adaptive"
+                style="@style/normalButtonStyle"
+                android:text="@string/hw3_1_3_adp"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="@dimen/textSize_small"
+                app:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_hw3_1_3_median"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_hw3_1_4"
+                style="@style/normalButtonStyle"
+                android:text="@string/hw3_1_4"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="@dimen/textSize_small"
+                app:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_hw3_1_3_adaptive"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_hw3_2_1"
+                style="@style/normalButtonStyle"
+                android:text="@string/hw3_2_1"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="@dimen/textSize_small"
+                app:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_hw3_1_4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_hw3_2_2"
+                style="@style/normalButtonStyle"
+                android:text="@string/hw3_2_2"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="@dimen/textSize_small"
+                app:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_hw3_2_1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_hw3_2_3"
+                style="@style/normalButtonStyle"
+                android:text="@string/hw3_2_3"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="@dimen/textSize_small"
+                app:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_hw3_2_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_hw3_3"
+                style="@style/normalButtonStyle"
+                android:text="@string/hw3_3"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="@dimen/textSize_small"
+                app:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_hw3_2_3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
+
+    <View
+        android:id="@+id/view_separatorLine_horizontal4"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@color/gray_level_6"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@id/frame"
+        app:layout_constraintStart_toStartOf="@id/frame"
+        app:layout_constraintTop_toBottomOf="@id/horizontalScrollView_hw3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -477,7 +604,7 @@
         android:hint="@string/width"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@id/guideline4"
-        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal3"
+        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal4"
         tools:visibility="visible">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -492,7 +619,7 @@
         android:hint="@string/height"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/guideline4"
-        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal3"
+        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal4"
         tools:visibility="visible">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -507,7 +634,7 @@
         android:hint="@string/fromx"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@id/textInputLayout_fromY"
-        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal3">
+        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal4">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditText_fromX"
@@ -521,7 +648,7 @@
         android:hint="@string/fromy"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@id/guideline4"
-        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal3">
+        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal4">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditText_fromY"
@@ -535,7 +662,7 @@
         android:hint="@string/tox"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/guideline4"
-        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal3">
+        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal4">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditText_toX"
@@ -549,7 +676,7 @@
         android:hint="@string/toy"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/textInputLayout_toX"
-        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal3">
+        app:layout_constraintTop_toBottomOf="@id/view_separatorLine_horizontal4">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditText_toY"

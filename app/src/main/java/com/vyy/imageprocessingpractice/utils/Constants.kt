@@ -27,6 +27,16 @@ object Constants {
     const val OTSU_THRESHOLD = "OTSU_THRESHOLD"
     const val SPECIAL_THRESHOLD = "SPECIAL_THRESHOLD"
 
+    const val HW3_1_1_FILTER = "HW3_1_1_FILTER"
+    const val HW3_1_2_FILTER = "HW3_1_2_FILTER"
+    const val HW3_1_3_MEDIAN = "HW3_1_3_MEDIAN"
+    const val HW3_1_3_ADAPTIVE = "HW3_1_3_ADAPTIVE"
+    const val HW3_1_4_FILTER = "HW3_1_4_FILTER"
+    const val HW3_2_1_RESTORE = "HW3_2_1_RESTORE"
+    const val HW3_2_2_RESTORE = "HW3_2_2_RESTORE"
+    const val HW3_2_3_RESTORE = "HW3_2_3_RESTORE"
+    const val HW3_3_FINGERPRINT = "HW3_3_FINGERPRINT"
+
     const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     const val REQUEST_CODE_PERMISSIONS = 10
 }
