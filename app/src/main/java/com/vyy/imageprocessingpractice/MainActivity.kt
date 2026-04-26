@@ -71,6 +71,10 @@ import com.vyy.imageprocessingpractice.utils.Constants.HW3_2_1_RESTORE
 import com.vyy.imageprocessingpractice.utils.Constants.HW3_2_2_RESTORE
 import com.vyy.imageprocessingpractice.utils.Constants.HW3_2_3_RESTORE
 import com.vyy.imageprocessingpractice.utils.Constants.HW3_3_FINGERPRINT
+import com.vyy.imageprocessingpractice.utils.Constants.HW4_1_SMOOTHING
+import com.vyy.imageprocessingpractice.utils.Constants.HW4_2_GRADIENT
+import com.vyy.imageprocessingpractice.utils.Constants.HW4_3_TOPHAT
+import com.vyy.imageprocessingpractice.utils.Constants.HW4_4_TEXTURAL
 import com.vyy.imageprocessingpractice.utils.InputFilterMinMax
 import com.vyy.imageprocessingpractice.utils.checkEnoughTimePassed
 import kotlinx.coroutines.*
@@ -202,6 +206,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             buttonHw322.setOnClickListener(this@MainActivity)
             buttonHw323.setOnClickListener(this@MainActivity)
             buttonHw33.setOnClickListener(this@MainActivity)
+            buttonHw41.setOnClickListener(this@MainActivity)
+            buttonHw42.setOnClickListener(this@MainActivity)
+            buttonHw43.setOnClickListener(this@MainActivity)
+            buttonHw44.setOnClickListener(this@MainActivity)
         }
     }
 
@@ -337,6 +345,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     }
                     imageProcessingJob = this.lifecycleScope.launch(Dispatchers.Main) {
                         processHw3Image(drawableResId, filterType)
+                    }
+                }
+
+                R.id.button_hw4_1, R.id.button_hw4_2, R.id.button_hw4_3, R.id.button_hw4_4 -> {
+                    cancelCurrentJobs()
+                    hideGrayAndRgbTextView()
+                    updateSelectedProcess(v.id)
+                    val (drawableResId, filterType) = when (v.id) {
+                        R.id.button_hw4_1 -> R.drawable.hw4_1 to HW4_1_SMOOTHING
+                        R.id.button_hw4_2 -> R.drawable.hw4_2 to HW4_2_GRADIENT
+                        R.id.button_hw4_3 -> R.drawable.hw4_3 to HW4_3_TOPHAT
+                        else -> R.drawable.hw4_4 to HW4_4_TEXTURAL
+                    }
+                    imageProcessingJob = this.lifecycleScope.launch(Dispatchers.Main) {
+                        processHw4Image(drawableResId, filterType)
                     }
                 }
 
@@ -858,6 +881,72 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private suspend fun processHw4Image(drawableResId: Int, filterType: String) {
+        try {
+            showProgressBar(true)
+
+            val sourceBitmap = withContext(Dispatchers.Default) {
+                BitmapFactory.decodeResource(resources, drawableResId)
+                    .copy(Bitmap.Config.ARGB_8888, true)
+            }
+
+            updateImageView(sourceBitmap.toDrawable(resources))
+            addToImageStack(sourceBitmap)
+            imageUriToBitmapDeferred = CoroutineScope(Dispatchers.Default).async { sourceBitmap }
+
+            binding.apply {
+                textViewGrayScale.visibility = View.VISIBLE
+                textViewRgb.visibility = View.GONE
+            }
+
+            when (filterType) {
+                HW4_1_SMOOTHING, HW4_2_GRADIENT -> {
+                    val resultDrawable = withContext(Dispatchers.Default) {
+                        when (filterType) {
+                            HW4_1_SMOOTHING -> hw4_1(sourceBitmap, resources)
+                            else -> hw4_2(sourceBitmap, resources)
+                        }
+                    }
+                    updateImageView(resultDrawable)
+                    imageUriToBitmapDeferred = CoroutineScope(Dispatchers.Default).async {
+                        val bitmap = resultDrawable.bitmap
+                        addToImageStack(bitmap)
+                        bitmap
+                    }
+                }
+                else -> {
+                    val listOfBitmapDrawables = withContext(Dispatchers.Default) {
+                        when (filterType) {
+                            HW4_3_TOPHAT -> hw4_3(sourceBitmap, resources)
+                            else -> hw4_4(sourceBitmap, resources)
+                        }
+                    }
+
+                    imageUriToBitmapDeferred = CoroutineScope(Dispatchers.Default).async {
+                        listOfBitmapDrawables.last().bitmap
+                    }
+
+                    listOfBitmapDrawables.forEachIndexed { index, bitmapDrawable ->
+                        updateImageView(bitmapDrawable)
+                        addToImageStack(bitmapDrawable.bitmap)
+                        Toast.makeText(
+                            this,
+                            "Image ${index + 1} of ${listOfBitmapDrawables.size}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        if (index < listOfBitmapDrawables.size - 1) {
+                            delay(2000)
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "HW4 image processing failed: ${e.message}", e)
+        } finally {
+            showProgressBar(false)
+        }
+    }
+
     private fun checkIfInputsValid(inputs: List<String>) = inputs.all { input ->
         input.isNotEmpty() && input.toDouble() > 0
     }
@@ -1006,7 +1095,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 buttonHw321,
                 buttonHw322,
                 buttonHw323,
-                buttonHw33
+                buttonHw33,
+                buttonHw41,
+                buttonHw42,
+                buttonHw43,
+                buttonHw44
             )
             clickableViews.forEach { it.isEnabled = !isShown }
         }

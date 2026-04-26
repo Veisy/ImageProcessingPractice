@@ -37,6 +37,11 @@ object Constants {
     const val HW3_2_3_RESTORE = "HW3_2_3_RESTORE"
     const val HW3_3_FINGERPRINT = "HW3_3_FINGERPRINT"
 
+    const val HW4_1_SMOOTHING = "HW4_1_SMOOTHING"
+    const val HW4_2_GRADIENT = "HW4_2_GRADIENT"
+    const val HW4_3_TOPHAT = "HW4_3_TOPHAT"
+    const val HW4_4_TEXTURAL = "HW4_4_TEXTURAL"
+
     const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     const val REQUEST_CODE_PERMISSIONS = 10
 }
